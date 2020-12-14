@@ -77,4 +77,4 @@ draw()
 
 screen.onscreenclick( find_click )
 
-turtle.done()
+screen.mainloop()

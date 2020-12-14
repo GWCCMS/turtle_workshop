@@ -11,6 +11,8 @@ screen_x, screen_y = screen.screensize()
 
 #screen.screensize(canvwidth=400, canvheight=400, bg="blue") 
 
+#question = screen.textinput("Window name", "Question to ask")
+
 m.showturtle()           #make the turtle visible
 m.speed(2)
 
@@ -70,4 +72,4 @@ m.forward(100)
      
      """
 
-turtle.done()
+screen.mainloop()

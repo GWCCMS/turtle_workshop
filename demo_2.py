@@ -87,4 +87,4 @@ move_turtle(m,-screen_x+150, -40)
 m.pencolor( "red" )
 m.write("5", font=("Verdana", 18, "bold"))
 
-turtle.done()
+screen.mainloop()
