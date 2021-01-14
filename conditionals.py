@@ -38,17 +38,17 @@ class Condition():
   def __init__(self):
     self.variable = variable
     self.compare = compare
-    self.value = value
+    self.value = randint(0, 9)
 
   def __init__(self, variable):
     self.variable = variable
     self.compare = compare
-    self.value = value
+    self.value = randint(0, 9)
 
   def __init__(self, variable, compare):
     self.variable = variable
     self.compare = compare
-    self.value = value
+    self.value = randint(0, 9)
 
   def __init__(self, variable, compare, value):
     self.variable = variable
