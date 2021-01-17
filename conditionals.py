@@ -28,21 +28,31 @@ class COMPARE(Enum):
   NOTEQUAL = 6
 
   @staticmethod
-  def get_sigh(which):
+  def get_sign(which):
 
     if which == COMPARE.EQUAL:
       return "=="
+    if which == COMPARE.LESS:
+      return "<"
+    if which == COMPARE.LESSOREQUAL:
+      return "<="
+    if which == COMPARE.GREATER:
+      return ">"
+    if which == COMPARE.GREATEROREQUAL:
+      return ">="
+    if which == COMPARE.NOTEQUAL:
+      return "!="
 
 class Condition():
 
   def __init__(self):
-    self.variable = variable
-    self.compare = compare
+    self.variable = chr(randint(65, 92))
+    self.compare = randint(1, 6)
     self.value = randint(0, 9)
 
   def __init__(self, variable):
     self.variable = variable
-    self.compare = compare
+    self.compare = randint(1, 6)
     self.value = randint(0, 9)
 
   def __init__(self, variable, compare):
@@ -70,6 +80,8 @@ class Condition():
   def set_value(self, value):
     self.value = value
 
+  def __str__(self):
+    return variable + " " + compare.get_sign() + " " + str(value)
 
 h = 50
 language = LANGUAGE.CPP
@@ -78,6 +90,11 @@ test = []
 bottom_margin = 20
 container_height = 100
 indent = 50
+
+turn = 0  # current turn
+turns = 10 # total turns
+wave = 1  # current wave
+waves = 5 # total waves
 
 s = turtle.getscreen()
 s.setup(820, 620) # 20 px for window sides
@@ -89,6 +106,10 @@ s.bgcolor("cyan")
 screenHeight = s.screensize()[1]
 screenWidth = s.screensize()[0]
 col1 = screenWidth * .3
+
+font_size_small = int(round(screenWidth / 50))
+font_size_medium = int(round(screenWidth / 33))
+font_size_large = int(round(screenWidth / 25))
 
 shape =((0, 0), (0, 150), (40, 150), (40, 0))
 turtle.register_shape('button', shape)
@@ -210,7 +231,7 @@ def drawBackground(s):
 def drawGraph(s):
   g = turtle.Turtle()
   s.tracer(0, 0)
-  turtleDefaults(g)
+  turtleDefaults(g, True)
   g.lt(90)
   for x in range(0, 800, 10):
     g.pu()    
@@ -241,25 +262,30 @@ def row_y(row):
   
 
 def onClick(x, y): 
-    print(x, " ", y)
-    if  -350 <= x <= -265 and 250 <= y <= 270:
-        draw(42)
-    elif -350 <= x <= -222 and 210 <= y <= 233:
-        draw("hello")
-    elif -350 <= x <= -250 and 170 <= y <= 190:
-        draw(3.14)
+  i = turtle.Turtle()
+  turtleDefaults(i, True)
+  ifstatement = test.pop()
+  i.write(ifstatement, font=("Courier New", font_size_medium)) 
+  ifstatement = test.pop()
+  i.write(ifstatement, font=("Courier New", font_size_medium)) 
+    #if  -350 <= x <= -265 and 250 <= y <= 270:
+    #    draw(42)
+    #elif -350 <= x <= -222 and 210 <= y <= 233:
+    #    draw("hello")
+    #elif -350 <= x <= -250 and 170 <= y <= 190:
+    #    draw(3.14)
 
 def answer1_onclick(x, y):
-  answer1.write("1", font=("Courier New", 24)) 
+  answer1.write("1", font=("Courier New", font_size_medium)) 
 
 def answer2_onclick(x, y):
-  answer1.write("2", font=("Courier New", 24)) 
+  answer1.write("2", font=("Courier New", font_size_medium)) 
 
 def answer3_onclick(x, y):
-    answer3.write("3", font=("Courier New", 24))
+    answer3.write("3", font=("Courier New", font_size_medium))
 
 def answer4_onclick(x, y):
-    answer4.write("4", font=("Courier New", 24))
+    answer4.write("4", font=("Courier New", font_size_medium))
 
 def turtleDefaults(t, hide, color="black", fill=""): 
   t.speed(0)
@@ -271,6 +297,21 @@ def show_button(t, x, y):
   t.pu()
   t.goto(x, y)
   t.st()
+
+def show_next():
+  c.clear()
+  c.pencolor("orange")
+
+  if turn == 0:
+    c.ht
+    c.goto(col1, row_y(1))
+    c.write("Test your skill with conditionals", font=("Courier New", font_size_medium)) 
+    c.write("You will get ten turns".format(turns), font=("Courier New", font_size_medium)) 
+    c.write("Each turn will have 5 waves", font=("Courier New", font_size_medium)) 
+    c.write("Try to correctly choose where", font=("Courier New", font_size_medium)) 
+    c.write("the next line will execute.", font=("Courier New", font_size_medium)) 
+  else:
+    c.write("Turn completed", font=("Courier New", font_size_medium)) 
 
 def show_conditional(test):
   # code takes 1 row and user input takes 2 rows
@@ -287,7 +328,7 @@ def show_conditional(test):
     c.goto(col1, row_y(1))
     c.pd()
     ifstatement = test[0]
-    c.write(if_begin.format(ifstatement.get_variable() + COMPARE.get_sigh(ifstatement.get_compare()) + str(ifstatement.get_value())), font=("Courier New", 24)) 
+    c.write(if_begin.format(ifstatement.get_variable() + COMPARE.get_sign(ifstatement.get_compare()) + str(ifstatement.get_value())), font=("Courier New", 24)) 
     show_button(answer1, col1 + indent, row_y(2 - 1)) # -1 because the shape starts at the upper left then draws down
     c.pu()
 
@@ -295,7 +336,7 @@ def show_conditional(test):
     c.goto(col1, row_y(4))
     c.pd()
     ifstatement = test[1]
-    c.write(if_middle.format(ifstatement.get_variable() + COMPARE.get_sigh(ifstatement.get_compare()) + str(ifstatement.get_value())), font=("Courier New", 24)) 
+    c.write(if_middle.format(ifstatement.get_variable() + COMPARE.get_sign(ifstatement.get_compare()) + str(ifstatement.get_value())), font=("Courier New", 24)) 
     show_button(answer2, col1 + indent, row_y(5 - 1)) # -1 because the shape starts at the upper left then draws down
     c.pu()
 
@@ -303,7 +344,7 @@ def show_conditional(test):
     c.goto(col1, row_y(7))
     c.pd()
     ifstatement = test[2]
-    c.write(if_last.format(ifstatement.get_variable() + COMPARE.get_sigh(ifstatement.get_compare()) + str(ifstatement.get_value())), font=("Courier New", 24)) 
+    c.write(if_last, font=("Courier New", font_size_medium)) 
     show_button(answer3, col1 + indent, row_y(8 - 1)) # -1 because the shape starts at the upper left then draws down
     c.pu()
 
@@ -311,8 +352,14 @@ def show_conditional(test):
     c.goto(col1, row_y(10))
     c.pd()
     ifstatement = test[3]
-    c.write(if_end.format(ifstatement.get_variable() + COMPARE.get_sigh(ifstatement.get_compare()) + str(ifstatement.get_value())), font=("Courier New", 24)) 
+    c.write(if_end, font=("Courier New", font_size_medium)) 
     show_button(answer4, col1, row_y(11 - 1)) # -1 because the shape starts at the upper left then draws down
+
+def start():
+  s.onscreenclick(onClick)
+  show_conditional(test)
+  Variable.draw_container(v, 35, h, "X", "5")
+  turtle.ontimer(advance_variable, 500)
 
 def advance_variable():
   global h
@@ -321,6 +368,10 @@ def advance_variable():
   h += 20
   if (h < screenHeight - bottom_margin - container_height):
     turtle.ontimer(advance_variable, 500)
+  else:
+    h = 50  # reset horizontal
+    show_next()
+
 
 turtleDefaults(answer1, True, "cyan", "blue")
 answer1.onclick(answer1_onclick)
@@ -333,6 +384,10 @@ answer4.onclick(answer4_onclick)
 
 ifstatement = Condition("X", COMPARE.EQUAL, 5)
 test.append(ifstatement)
+ifstatement = Condition("Y", COMPARE.LESS, 7)
+test.append(ifstatement)
+ifstatement = Condition("Z", COMPARE.NOTEQUAL, 1)
+test.append(ifstatement)
 
 v = turtle.Turtle()
 turtleDefaults(v, True)
@@ -342,10 +397,7 @@ turtleDefaults(c, True)
 drawBackground(s)
 #drawGraph(s)
 
-s.onscreenclick(onClick)
-show_conditional(test)
-Variable.draw_container(v, 35, h, "X", "5")
-turtle.ontimer(advance_variable, 500)
+show_next()
 
 #s.onkey(nextFSMstate, "space")
 #s.listen()
