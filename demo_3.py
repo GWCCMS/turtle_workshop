@@ -1,5 +1,8 @@
 import turtle
 
+title_x = -380
+title_y = 250
+
 def move_turtle( t, x, y ):
      t.penup()                #don't draw when turtle moves
      t.goto( x, y)       #move the turtle to a location
@@ -9,11 +12,12 @@ def move_turtle( t, x, y ):
 # drawing a box with label X
 def draw( v="" ):
     global turtle_b
+    global title_x, title_y
     #print(v)   # for debigging only
     turtle_b.clear()
     turtle_b.setheading(0)
     
-    move_turtle( turtle_b, -screen_x+270, 40)
+    move_turtle( turtle_b, title_x+210, title_y-250 )
 
     turtle_b.pencolor( "red" )
     turtle_b.pensize( 4 )
@@ -25,13 +29,13 @@ def draw( v="" ):
     turtle_b.left(90)
     turtle_b.forward(50)
 
-    # drawing the label X
-    move_turtle(turtle_b,-screen_x+300, -40)
+    # drawing the label X and the value
+    move_turtle(turtle_b, title_x+240, title_y-325)
     turtle_b.pencolor( "blue" )
     turtle_b.write("x", font=("Verdana", 18, "bold"))
 
-    move_turtle(turtle_b,-screen_x+280, 5)
-    turtle_b.pencolor( "green" )
+    move_turtle(turtle_b, title_x+225, title_y-280)
+    turtle_b.pencolor( "red" )
     turtle_b.write(v, font=("Verdana", 18, "bold"))
 
     
@@ -41,11 +45,11 @@ def find_click(x, y):
     if drawing == False:
         drawing = True
         print(x, " ", y) 
-        if  -350 <= x <= -280 and 58 <= y <= 82:
+        if  -385 <= x <= -270 and 17 <= y <= 37:
             draw(42)
-        elif -350 <= x <= -250 and 21 <= y <= 46:
+        elif -385 <= x <= -270 and -30 <= y <= -11:
             draw("hello")
-        elif -350 <= x <= -250 and -22 <= y <= 0:
+        elif -385 <= x <= -270 and -67 <= y <= -49:
             draw(3.14)
         drawing = False
 
@@ -66,23 +70,33 @@ screen = turtle.Screen()
 screen.title('Turtle Demo 1')
 screen.bgcolor("#dcf2d5")
 screen.tracer(0)
-screen_x, screen_y = screen.screensize()
 
+#screen_x, screen_y = screen.screensize()
+
+screen.setup(800, 600)
+
+#print( screen_x )
+#print( screen_y )
+#print( "*********" )
+
+#print(turtle.window_height())
+#print(turtle.window_width())
+#print( "*********" )
 
 ####################################################################################
 # interaction
 ####################################################################################
 
-move_turtle( m, -screen_x+50, screen_y )
+move_turtle( m, title_x, title_y )
 m.write("How does a variable look like?", font=("Verdana", 32, "bold"))
 
-move_turtle( m, -screen_x+50, screen_y-35 )
+move_turtle( m, title_x, title_y-30 )
 m.write("Developer's instruction: x=12", font=("Verdana", 18, "normal"))
 
-move_turtle( m, -screen_x+50, screen_y-70 )
+move_turtle( m, title_x, title_y-60 )
 m.write("Computer memory:", font=("Verdana", 18, "normal"))
-move_turtle( m, -screen_x+270, screen_y-50 )
 
+move_turtle( m, title_x+210, title_y-45 )
 m.setheading(0)
 m.pencolor( "red" )
 m.pensize( 4 )
@@ -94,12 +108,13 @@ m.forward(80)
 m.left(90)
 m.forward(50)
 
-# drawing the label X
-move_turtle(m,-screen_x+300, screen_y-80)
+# drawing the value
+move_turtle(m,title_x+240, title_y-75)
 m.pencolor( "red" )
 m.write("12", font=("Verdana", 18, "bold"))
 
-move_turtle(m,-screen_x+300, screen_y-120)
+# drawing the label X
+move_turtle(m,title_x+240, title_y-120)
 m.pencolor( "blue" )
 m.write("x", font=("Verdana", 18, "bold"))
 
@@ -110,16 +125,16 @@ m.pensize( 2 )
 # interaction
 ####################################################################################
 
-move_turtle( m, -screen_x+50, screen_y-200 )
+move_turtle( m, title_x, title_y-200 )
 m.write("Click on one of the instructions below to see their effect in memory", font=("Verdana", 18, "normal"))
 
-move_turtle( m, -screen_x+50, screen_y-240)
+move_turtle( m, title_x, title_y-240)
 m.write("x = 42", font=("Verdana", 18, "normal"))
 
-move_turtle(m,-screen_x+50, screen_y-280)
+move_turtle(m, title_x, title_y-280)
 m.write("x = \"hello\"", font=("Verdana", 18, "normal"))
 
-move_turtle(m,-screen_x+50, screen_y-320)
+move_turtle(m, title_x, title_y-320)
 m.write("x = 3.24", font=("Verdana", 18, "normal"))
 
 turtle.tracer(n=1, delay=10)
