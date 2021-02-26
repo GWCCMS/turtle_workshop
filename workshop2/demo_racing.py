@@ -1,9 +1,12 @@
 import turtle
 from random import randint  
 
+turtle.tracer(0)
 edna = turtle.Turtle()
 edna.shape("turtle")
-edna.speed(1)
+#edna.speed(1)
+
+
 
 bob = turtle.Turtle()
 bob.hideturtle()
@@ -45,12 +48,16 @@ for c in strfl:
     edna.pendown()
     edna.write(c, font=("Arial", 14, "normal"))
 
+
 edna.right(-90)
 
 edna.penup()
 edna.setpos(-250,40)
 edna.pendown()
 edna.color("red")
+
+turtle.tracer(1)
+
 
 race()
 
