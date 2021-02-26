@@ -107,8 +107,15 @@ screenHeight = s.screensize()[1]
 screenWidth = s.screensize()[0]
 col1 = screenWidth * .3
 
+#Next button
+leftNext = screenWidth - (screenWidth * .2)
+bottomNext = screenHeight * .6
+heightNext = screenHeight / 24
+widthNext = screenWidth / 12
+marginNext = screenHeight * screenWidth / 80000
+
 font_size_small = int(round(screenWidth / 50))
-font_size_medium = int(round(screenWidth / 33))
+font_size_medium = int(round(screenWidth * screenHeight / 24000))
 font_size_large = int(round(screenWidth / 25))
 
 shape =((0, 0), (0, 150), (40, 150), (40, 0))
@@ -121,7 +128,6 @@ answer3 = turtle.Turtle()
 answer3.shape('button')
 answer4 = turtle.Turtle()
 answer4.shape('button')
-
 
 
 if (language == LANGUAGE.CPP):
@@ -183,6 +189,14 @@ def drawBackground(s):
   y2ndSectionHeight = screenHeight * .75
   margin = screenWidth * .025
   corner = x2ndSectionWidth * .1
+  monitorStandLeft = screenWidth * .44
+  monitorStandTop = screenHeight * .82
+  monitorStandHeight = screenHeight * .1
+  monitorStandWidth = screenWidth * .3
+  computerLeft = screenWidth * .25
+  computerTop = screenHeight * .82
+  computerHeight = screenHeight * .2
+  computerWidth = screenWidth * .68
 
   b = turtle.Turtle()
   turtleDefaults(b, True)
@@ -224,10 +238,38 @@ def drawBackground(s):
   b.up()
   b.goto(offsetx2ndSection + (corner / 2), y2ndSectionHeight -  (corner / 2))
   b.pencolor("gray")
-  #b.write(b.pos(), font=("Courier New", 18, "bold")) 
-  b.write("Marv quad speed", font=("Times New Roman", 18)) 
+  b.write("Marv quad speed", font=("Times New Roman", font_size_medium)) 
+  b.goto(monitorStandLeft, monitorStandTop)
+  b.pd
+  b.fillcolor("wheat")
+  b.pencolor("azure2")
+  b.begin_fill()
+  b.fd(monitorStandWidth)
+  b.rt(90)
+  b.fd(monitorStandHeight)
+  b.rt(90)
+  b.fd(monitorStandWidth)
+  b.rt(90)
+  b.fd(monitorStandHeight)
+  b.end_fill()
+  b.pu
+  b.goto(computerLeft, computerTop)
+  b.pd
+  b.fillcolor("black")
+  b.begin_fill()
+  b.fd(computerHeight)
+  b.rt(90)
+  b.fd(computerWidth)
+  b.rt(90)
+  b.fd(computerHeight)
+  b.rt(90)
+  b.fd(computerWidth)
+  b.end_fill()
+  #computerLeft = screenWidth * .25
+  #computerTop = screenHeight * .85
+  #computerHeight = screenHeight * .15
+  #computerWidth = screenWidth * .75
 
-  
 def drawGraph(s):
   g = turtle.Turtle()
   s.tracer(0, 0)
@@ -245,6 +287,11 @@ def drawGraph(s):
     g.pd()
     g.fd(800)
   s.update()
+
+def move_turtle( t, x, y ):
+    t.penup()               #don't draw when turtle moves
+    t.goto( x, y)           #move the turtle to a location
+    t.pendown()
 
 def playWinSound():
   # Source of sound effect: https://www.youtube.com/watch?v=dAVzcGcVecU\
@@ -268,12 +315,12 @@ def onClick(x, y):
   i.write(ifstatement, font=("Courier New", font_size_medium)) 
   ifstatement = test.pop()
   i.write(ifstatement, font=("Courier New", font_size_medium)) 
-    #if  -350 <= x <= -265 and 250 <= y <= 270:
-    #    draw(42)
-    #elif -350 <= x <= -222 and 210 <= y <= 233:
-    #    draw("hello")
-    #elif -350 <= x <= -250 and 170 <= y <= 190:
-    #    draw(3.14)
+  if  -350 <= x <= -265 and 250 <= y <= 270:
+      draw(42)
+  elif -350 <= x <= -222 and 210 <= y <= 233:
+      draw("hello")
+  elif -350 <= x <= -250 and 170 <= y <= 190:
+      draw(3.14)
 
 def answer1_onclick(x, y):
   answer1.write("1", font=("Courier New", font_size_medium)) 
@@ -299,19 +346,49 @@ def show_button(t, x, y):
   t.st()
 
 def show_next():
+
   c.clear()
   c.pencolor("orange")
 
   if turn == 0:
-    c.ht
-    c.goto(col1, row_y(1))
-    c.write("Test your skill with conditionals", font=("Courier New", font_size_medium)) 
-    c.write("You will get ten turns".format(turns), font=("Courier New", font_size_medium)) 
-    c.write("Each turn will have 5 waves", font=("Courier New", font_size_medium)) 
-    c.write("Try to correctly choose where", font=("Courier New", font_size_medium)) 
-    c.write("the next line will execute.", font=("Courier New", font_size_medium)) 
+    move_turtle(c, col1, row_y(1))
+    c.write("screenWidth = " + str(screenWidth), font=("Courier New", font_size_medium))
+    #c.write("Test your skill with", font=("Courier New", font_size_medium)) 
+    move_turtle(c, col1, row_y(2))
+    c.write("conditionals. You will".format(turns), font=("Courier New", font_size_medium)) 
+    move_turtle(c, col1, row_y(3))
+    c.write("get ten turns.  Each".format(turns), font=("Courier New", font_size_medium)) 
+    move_turtle(c, col1, row_y(4))
+    c.write("turn will have 5 waves.", font=("Courier New", font_size_medium)) 
+    move_turtle(c, col1, row_y(5))
+    c.write("Try to correctly choose", font=("Courier New", font_size_medium)) 
+    move_turtle(c, col1, row_y(6))
+    c.write("where the next line", font=("Courier New", font_size_medium)) 
+    move_turtle(c, col1, row_y(7))
+    c.write("will execute based", font=("Courier New", font_size_medium)) 
+    move_turtle(c, col1, row_y(8))
+    c.write("on the True / False.", font=("Courier New", font_size_medium)) 
   else:
     c.write("Turn completed", font=("Courier New", font_size_medium)) 
+
+  c.pu
+  c.pencolor("cyan")
+  c.fillcolor('blue')
+  c.goto(leftNext - marginNext, bottomNext )
+  c.pd
+  c.begin_fill()
+  c.fd(widthNext + marginNext)
+  c.rt(90)
+  c.fd(heightNext + marginNext)
+  c.rt(90)
+  c.fd(widthNext + marginNext)
+  c.rt(90)
+  c.fd(heightNext + marginNext)
+  c.end_fill()
+  c.pu
+  c.goto(leftNext, bottomNext)
+  c.pencolor("white")
+  c.write("NEXT", font=("Courier New", font_size_medium)) 
 
 def show_conditional(test):
   # code takes 1 row and user input takes 2 rows
@@ -355,7 +432,11 @@ def show_conditional(test):
     c.write(if_end, font=("Courier New", font_size_medium)) 
     show_button(answer4, col1, row_y(11 - 1)) # -1 because the shape starts at the upper left then draws down
 
-def start():
+def start(x, y):
+  # get rid of the 'Next' button
+  next_turn.ht()
+  next_turn_text.clear()
+
   s.onscreenclick(onClick)
   show_conditional(test)
   Variable.draw_container(v, 35, h, "X", "5")
@@ -381,6 +462,7 @@ turtleDefaults(answer3, True, "cyan", "blue")
 answer3.onclick(answer3_onclick)
 turtleDefaults(answer4, True, "cyan", "blue")
 answer4.onclick(answer4_onclick)
+
 
 ifstatement = Condition("X", COMPARE.EQUAL, 5)
 test.append(ifstatement)
